@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PantherStoreX | Premium Subscriptions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Vercel/Linear inspired Dark Theme */
+            --bg-base: #000000;
+            --bg-surface: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-hover: #161616;
+            --text-primary: #ededed;
+            --text-secondary: #888888;
+            --border-color: #222222;
+            --border-hover: #444444;
+            --accent: #ffffff;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* --- Tipografía & Utilidades --- */
+        h1, h2, h3 { color: var(--text-primary); letter-spacing: -0.03em; }
+        .text-gradient {
+            background: linear-gradient(180deg, #fff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            padding: 16px 0;
+        }
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.05em; display: flex; align-items: center; gap: 8px;}
+        .logo-icon { color: var(--accent); }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 180px 0 100px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hero-badge {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            max-width: 800px;
+        }
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 500px;
+            margin-bottom: 40px;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-base);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Benefits --- */
+        .benefits {
+            padding: 80px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-surface);
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+        .benefit-card {
+            padding: 32px;
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+        }
+        .benefit-card i {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        .benefit-card h3 { font-size: 1.125rem; margin-bottom: 8px; }
+        .benefit-card p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        /* --- Catalog --- */
+        .catalog { padding: 120px 0; }
+        .section-header { margin-bottom: 48px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 16px; }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        @media (min-width: 768px) {
+            .controls { flex-direction: row; align-items: center; justify-content: space-between; }
+        }
+
+        /* Search */
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+        }
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        .search-box input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 16px 12px 40px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .search-box input:focus { border-color: var(--border-hover); }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+        .filters::-webkit-scrollbar { display: none; } 
+        
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .filter-btn:hover { border-color: var(--border-hover); color: var(--text-primary); }
+        .filter-btn.active { background: var(--text-primary); color: var(--bg-base); border-color: var(--text-primary); }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            background: var(--bg-card-hover);
+        }
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .product-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        .product-info h3 { font-size: 1rem; font-weight: 500; }
+        .product-info span { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .product-price { font-size: 1.5rem; font-weight: 600; margin-bottom: 24px; }
+        .product-btn {
+            margin-top: auto;
+            width: 100%;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .product-card:hover .product-btn {
+            background: var(--text-primary);
+            color: var(--bg-base);
+        }
+
+        /* --- FAQ --- */
+        .faq { padding: 100px 0; border-top: 1px solid var(--border-color); }
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 0;
+            cursor: pointer;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .faq-item.active .faq-answer { max-height: 200px; margin-top: 16px; }
+        .faq-item i { transition: transform 0.3s ease; }
+        .faq-item.active i { transform: rotate(180deg); }
+        
+        /* --- Contact Section --- */
+        .contact-section {
+            padding: 100px 0;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .contact-card {
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 48px 24px;
+            max-width: 600px;
+            width: 100%;
+            transition: var(--transition);
+        }
+        .contact-card:hover {
+            border-color: var(--border-hover);
+        }
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+        .contact-card h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        .contact-card p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        .btn-contact {
+            background: var(--text-primary);
+            color: var(--bg-base);
+            padding: 14px 32px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+        }
+        .btn-contact i {
+            font-size: 1.1rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 60px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+            background: var(--bg-base);
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            letter-spacing: -0.05em;
+            margin-bottom: 8px;
+        }
+        .footer-email {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-email:hover {
+            color: var(--text-primary);
+        }
+        .footer-copyright {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 16px;
+        }
+        
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-content">
+            <div class="logo"><i class="fa-solid fa-bolt logo-icon"></i> PantherStoreX</div>
+            <a href="#catalog" class="btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">Ver Catálogo</a>
+        </div>
+    </nav>
+
+    <header class="hero container reveal">
+        <div class="hero-badge">
+            <i class="fa-solid fa-bolt" style="color: #fff;"></i> Activación inmediata
+        </div>
+        <h1 class="text-gradient">El estándar premium en suscripciones digitales.</h1>
+        <p>Accede a las mejores plataformas de streaming, inteligencia artificial y herramientas profesionales con infraestructura de máxima estabilidad.</p>
+        <a href="#catalog" class="btn-primary">Explorar Servicios</a>
+    </header>
+
+    <section class="benefits reveal">
+        <div class="container benefits-grid">
+            <div class="benefit-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Garantía de Renovación</h3>
+                <p>Nuestra política es clara: la mensualidad de tu suscripción costará exactamente lo mismo que el precio de compra inicial.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-bolt-lightning"></i>
+                <h3>Despliegue Rápido</h3>
+                <p>Entregas y configuraciones procesadas con la máxima eficiencia para que disfrutes de tu servicio sin esperas innecesarias.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fa-solid fa-headset"></i>
+                <h3>Soporte Premium</h3>
+                <p>Atención continua para resolver cualquier incidencia técnica con tus plataformas al instante.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog" class="catalog container reveal">
+        <div class="section-header">
+            <h2 class="text-gradient">Catálogo de Servicios</h2>
+            <p style="color: var(--text-secondary);">Filtra y encuentra tu próxima plataforma.</p>
+        </div>
+
+        <div class="controls">
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-filter="All">Todos</button>
+                <button class="filter-btn" data-filter="Streaming">Streaming</button>
+                <button class="filter-btn" data-filter="IA">IA</button>
+                <button class="filter-btn" data-filter="Productividad">Productividad</button>
+                <button class="filter-btn" data-filter="VPN">VPN</button>
+                <button class="filter-btn" data-filter="Deportes">Deportes</button>
+            </div>
+            <div class="search-box">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar servicio...">
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Renderizado dinámico vía JS -->
+        </div>
+    </section>
+
+    <section class="faq container reveal">
+        <div class="section-header text-center">
+            <h2>Preguntas Frecuentes</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Cómo funciona el precio de renovación?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Mantenemos una política estricta de transparencia: la mensualidad costará exactamente lo mismo que te costó la cuenta al inicio. Si adquieres un servicio por 4.50, tu renovación será de 4.50. Sin cambios sorpresa.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿En cuánto tiempo recibo mi acceso?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Una vez confirmada la transacción, el sistema y nuestro equipo procesan la entrega en un lapso muy breve, garantizando que puedas usar tu herramienta casi de inmediato.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Qué significa FA y NFA?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    FA (Full Access) significa que tienes acceso completo para modificar datos de la cuenta (correo, contraseña). NFA (Non-Full Access) te permite el uso del servicio bajo las credenciales proporcionadas sin posibilidad de alterar los datos raíz.
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact-section reveal" id="contact">
+        <div class="container" style="display: flex; justify-content: center;">
+            <div class="contact-card">
+                <i class="fa-regular fa-envelope contact-icon"></i>
+                <h2 class="text-gradient">Contáctanos</h2>
+                <p>¿Tienes alguna duda o necesitas ayuda? Contáctanos y te responderemos lo antes posible.</p>
+                
+                <a href="mailto:pantherstorex@gmail.com" class="btn-contact">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Contactar ahora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">PantherStoreX</div>
+            <a href="mailto:pantherstorex@gmail.com" class="footer-email">pantherstorex@gmail.com</a>
+            <div class="footer-copyright">© 2026 PantherStoreX. Todos los derechos reservados.</div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Data de Productos ---
+        const products = [
+            // Streaming
+            { name: "Netflix", price: "0,15 €", category: "Streaming", icon: "fa-film" },
+            { name: "Netflix FA", price: "1,50 €", category: "Streaming", icon: "fa-film" },
+            { name: "Spotify 3 Months FA", price: "1,00 €", category: "Streaming", icon: "fa-music" },
+            { name: "Prime Video 1 Month", price: "0,50 €", category: "Streaming", icon: "fa-play" },
+            { name: "Prime Video 6 Months FA", price: "1,00 €", category: "Streaming", icon: "fa-play" },
+            { name: "Prime Video No Ads", price: "1,25 €", category: "Streaming", icon: "fa-play" },
+            { name: "Max FA", price: "1,75 €", category: "Streaming", icon: "fa-tv" },
+            { name: "Disney+ Hulu FA", price: "1,50 €", category: "Streaming", icon: "fa-plus" },
+            { name: "Crunchyroll Mega Fan FA", price: "1,25 €", category: "Streaming", icon: "fa-dragon" },
+            { name: "YouTube Premium 3 Months FA", price: "1,50 €", category: "Streaming", icon: "fa-youtube" },
+            { name: "Movistar", price: "1,00 €", category: "Streaming", icon: "fa-satellite-dish" },
+            { name: "Atresplayer", price: "1,35 €", category: "Streaming", icon: "fa-video" },
+            { name: "RTL Premium", price: "1,25 €", category: "Streaming", icon: "fa-broadcast-tower" },
+            
+            // IA
+            { name: "ChatGPT Plus FA 1 Month", price: "$7.00", category: "IA", icon: "fa-robot" },
+            { name: "Gemini 12 Months", price: "1,00 €", category: "IA", icon: "fa-brain" },
+            
+            // Productividad
+            { name: "Microsoft FA 1 Year", price: "1,50 €", category: "Productividad", icon: "fa-windows" },
+            { name: "CapCut FA", price: "1,25 €", category: "Productividad", icon: "fa-scissors" },
+            { name: "CapCut NFA", price: "0,45 €", category: "Productividad", icon: "fa-scissors" },
+            
+            // VPN
+            { name: "NordVPN 1 Year NFA", price: "1,00 €", category: "VPN", icon: "fa-network-wired" },
+            { name: "NordVPN FA 3 Months", price: "1,25 €", category: "VPN", icon: "fa-network-wired" },
+            { name: "TunnelBear", price: "1,75 €", category: "VPN", icon: "fa-paw" },
+            { name: "CyberGhost", price: "1,75 €", category: "VPN", icon: "fa-ghost" },
+            
+            // Deportes
+            { name: "DAZN Random", price: "0,40 €", category: "Deportes", icon: "fa-volleyball" },
+            { name: "DAZN Premium ES", price: "1,20 €", category: "Deportes", icon: "fa-volleyball" },
+            { name: "DAZN Unlimited", price: "1,20 €", category: "Deportes", icon: "fa-volleyball" },
+            { name: "UFC", price: "0,40 €", category: "Deportes", icon: "fa-hand-fist" },
+            { name: "WWE", price: "0,40 €", category: "Deportes", icon: "fa-ring" }
+        ];
+
+        const grid = document.getElementById('productsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // --- Lógica de Renderizado y Filtrado ---
+        function renderProducts(items) {
+            grid.innerHTML = '';
+            if (items.length === 0) {
+                grid.innerHTML = '<p style="color: var(--text-secondary); grid-column: 1/-1; text-align:center;">No se encontraron servicios.</p>';
+                return;
+            }
+            items.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-header">
+                        <div class="product-icon"><i class="fa-solid ${product.icon}"></i></div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <span>${product.category}</span>
+                        </div>
+                    </div>
+                    <div class="product-price">${product.price}</div>
+                    <button class="product-btn">Adquirir Plan</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCatalog() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeCategory = document.querySelector('.filter-btn.active').dataset.filter;
+            
+            const filtered = products.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
+                const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
+                return matchesSearch && matchesCategory;
+            });
+            
+            renderProducts(filtered);
+        }
+
+        // Listeners Filtros
+        searchInput.addEventListener('input', filterCatalog);
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterCatalog();
+            });
+        });
+
+        // Inicializar
+        renderProducts(products);
+
+        // --- Lógica FAQ ---
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        // --- Animaciones Scroll Reveal ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
