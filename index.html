@@ -181,7 +181,7 @@
         .modal-body::-webkit-scrollbar-track { background: var(--bg-base); }
         .modal-body::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; }
 
-        /* --- FAQ & Contact (Mantenido) --- */
+        /* --- FAQ & Contact --- */
         .faq { padding: 100px 0; border-top: 1px solid var(--border-color); }
         .faq-item { border-bottom: 1px solid var(--border-color); padding: 24px 0; cursor: pointer; }
         .faq-question { display: flex; justify-content: space-between; align-items: center; font-size: 1.125rem; font-weight: 500; transition: var(--transition); }
@@ -196,7 +196,7 @@
         .contact-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
         .contact-icon { font-size: 2.5rem; color: var(--text-primary); margin-bottom: 24px; display: inline-block; }
         .contact-card h2 { font-size: 2rem; margin-bottom: 16px; }
-        .contact-card p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 32px; l.6; }
+        .contact-card p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 32px; line-height:  1.6; }
         
         footer { border-top: 1px solid var(--border-color); padding: 60px 24px; text-align: center; color: var(--text-secondary); background: var(--bg-base); }
         .footer-content { display: flex; flex-direction: column; align-items: center; gap: 8px; }
@@ -258,7 +258,6 @@
         </div>
     </section>
 
-    <!-- NUEVA SECCIÓN: ESTADÍSTICAS -->
     <section class="stats reveal">
         <div class="container stats-grid">
             <div class="stat-card">
@@ -307,12 +306,10 @@
             </div>
 
             <div class="products-grid" id="productsGrid">
-                <!-- Tarjetas inyectadas dinámicamente -->
-            </div>
+                </div>
         </div>
     </section>
 
-    <!-- NUEVA SECCIÓN: OPINIONES -->
     <section id="reviews" class="reviews reveal">
         <div class="container">
             <div class="reviews-header">
@@ -321,8 +318,7 @@
             </div>
 
             <div class="reviews-grid" id="previewReviewsGrid">
-                <!-- Reseñas inyectadas dinámicamente -->
-            </div>
+                </div>
 
             <div style="text-align: center;">
                 <button id="btnOpenReviews" class="btn-secondary">
@@ -373,7 +369,6 @@
         </div>
     </footer>
 
-    <!-- MODAL DE RESEÑAS -->
     <div class="modal-overlay" id="reviewsModal">
         <div class="modal-container">
             <div class="modal-header">
@@ -385,15 +380,13 @@
                 <button class="filter-btn">5 Estrellas</button>
             </div>
             <div class="modal-body" id="fullReviewsList">
-                <!-- Se inyectan vía JS -->
-            </div>
+                </div>
         </div>
     </div>
 
     <script>
         // --- BASE DE DATOS DE PRODUCTOS ---
         const products = [
-            // Streaming
             { name: "Netflix", type: "NFA", time: "1 Mes", price: "0,15 €", category: "Streaming", domain: "netflix.com" },
             { name: "Netflix", type: "FA", time: "1 Mes", price: "1,50 €", oldPrice: "2,50 €", badge: "Oferta", badgeClass: "badge-oferta", category: "Streaming", domain: "netflix.com" },
             { name: "Spotify", type: "FA", time: "3 Meses", price: "1,00 €", badge: "Más vendido", badgeClass: "badge-bestseller", category: "Streaming", domain: "spotify.com" },
@@ -407,19 +400,15 @@
             { name: "Movistar", type: "Standard", time: "1 Mes", price: "1,00 €", category: "Streaming", domain: "movistar.es" },
             { name: "Atresplayer", type: "Standard", time: "1 Mes", price: "1,35 €", category: "Streaming", domain: "atresplayer.com" },
             { name: "RTL Premium", type: "Premium", time: "1 Mes", price: "1,25 €", category: "Streaming", domain: "rtl.de" },
-            // IA
             { name: "ChatGPT Plus", type: "FA", time: "1 Mes", price: "$7.00", oldPrice: "$9.50", badge: "Más vendido", badgeClass: "badge-bestseller", category: "IA", domain: "openai.com" },
             { name: "Gemini", type: "On Mail", time: "12 Meses", price: "1,00 €", category: "IA", domain: "gemini.google.com" },
-            // Productividad
             { name: "Microsoft 365", type: "FA", time: "1 Año", price: "1,50 €", category: "Productividad", domain: "microsoft.com" },
             { name: "CapCut Pro", type: "FA", time: "1 Mes", price: "1,25 €", category: "Productividad", domain: "capcut.com" },
             { name: "CapCut Pro", type: "NFA", time: "1 Mes", price: "0,45 €", category: "Productividad", domain: "capcut.com" },
-            // VPN
             { name: "NordVPN", type: "NFA", time: "1 Año", price: "1,00 €", category: "VPN", domain: "nordvpn.com" },
             { name: "NordVPN", type: "FA", time: "3 Meses", price: "1,25 €", badge: "Más vendido", badgeClass: "badge-bestseller", category: "VPN", domain: "nordvpn.com" },
             { name: "TunnelBear", type: "Premium", time: "1 Mes", price: "1,75 €", category: "VPN", domain: "tunnelbear.com" },
             { name: "CyberGhost", type: "Premium", time: "1 Mes", price: "1,75 €", category: "VPN", domain: "cyberghostvpn.com" },
-            // Deportes
             { name: "DAZN", type: "Random", time: "1 Mes", price: "0,40 €", category: "Deportes", domain: "dazn.com" },
             { name: "DAZN", type: "Premium ES", time: "1 Mes", price: "1,20 €", oldPrice: "2,00 €", badge: "Oferta", badgeClass: "badge-oferta", category: "Deportes", domain: "dazn.com" },
             { name: "DAZN", type: "Unlimited", time: "1 Mes", price: "1,20 €", category: "Deportes", domain: "dazn.com" },
@@ -527,10 +516,7 @@
         const previewGrid = document.getElementById('previewReviewsGrid');
         const fullList = document.getElementById('fullReviewsList');
         
-        // Cargar las 3 primeras en la pantalla principal
         reviews.slice(0, 3).forEach(r => { previewGrid.innerHTML += generateReviewHTML(r); });
-        
-        // Cargar todas en el modal
         reviews.forEach(r => { fullList.innerHTML += generateReviewHTML(r); });
 
         // --- LÓGICA DEL MODAL ---
@@ -552,9 +538,9 @@
             if (e.target === modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
         });
 
-        // --- LÓGICA DE CONTADORES (ESTADÍSTICAS) ---
+        // --- LÓGICA DE CONTADORES ---
         const counters = document.querySelectorAll('.counter');
-        const speed = 200; // Velocidad de la animación
+        const speed = 200; 
 
         const counterObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -591,7 +577,7 @@
             });
         });
 
-        const revealElements = document.querySelectorAll('.revealNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.        const revealElements = document.querySelectorAll('.reveal');
+        const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -605,4 +591,3 @@
     </script>
 </body>
 </html>
-
