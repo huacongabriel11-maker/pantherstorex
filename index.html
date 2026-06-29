@@ -591,4 +591,18 @@
             });
         });
 
-        const revealElements = document.querySelectorAll('.revealNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+        const revealElements = document.querySelectorAll('.revealNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: "0px 0px -50px 0px", threshold: 0 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
+
